@@ -1,0 +1,22 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# Builds from the existing production Dockerfile (multi-stage: npm ci, react-router
+# build, npm run start). Postgres is NOT defined here — using Neon instead of Render's
+# own managed Postgres (see kurobb-design.md's deployment notes), so DATABASE_URL is set
+# manually to Neon's connection string after the Neon project is created.
+services:
+  - type: web
+    name: kurobb
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: 0.5c-512mb # "Starter" — 0.5 CPU / 512MB, ~$7/mo
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Render injects its own PORT; server.js already reads process.env.PORT.
+      - key: DATABASE_URL
+        sync: false # paste Neon's connection string in the Render dashboard
+      - key: SESSION_COOKIE_SECRET
+        generateValue: true # Render generates and stores a random secret
+      - key: SESSION_TTL
+        value: 30d

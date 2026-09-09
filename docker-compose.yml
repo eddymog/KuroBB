@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: kurobb
+      POSTGRES_PASSWORD: kurobb
+      POSTGRES_DB: kurobb
+    # Mapped to 5433 on the host, not 5432 — this machine already has a
+    # native Postgres bound to 127.0.0.1:5432 (unrelated to this project;
+    # left running rather than touched).
+    ports: ["5433:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+
+  mysql:
+    image: mysql:8
+    profiles: ["migration"]
+    environment:
+      MYSQL_ROOT_PASSWORD: mybb
+      MYSQL_DATABASE: mybb_sg
+    ports: ["3306:3306"]
+
+volumes:
+  pgdata:

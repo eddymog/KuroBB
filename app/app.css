@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* STYLE.md §2, §3 — light values are the defaults; dark values re-declared
+   under prefers-color-scheme below. No manual toggle (STYLE.md §3). */
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Newsreader", ui-serif, Georgia, serif;
+
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1efe9;
+  --color-border: #e2ded4;
+  --color-ink: #1a1712;
+  --color-ink-muted: #6b6558;
+  --color-accent: #9c3b2e;
+  --color-accent-soft: #f4e6e2;
+}
+
+/* NOT another @theme block — @theme is a compile-time token registry, not a
+   runtime cascade; a second @theme here doesn't scope to the media query,
+   it just overwrites the first block's values in Tailwind's build, and the
+   light values disappear entirely (confirmed by grepping the compiled CSS
+   output — this actually happened, not a hypothetical). The override has to
+   be a plain CSS custom-property reassignment on :root so the normal
+   cascade — which a media query is part of — can apply it conditionally. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #15130f;
+    --color-surface: #1d1a15;
+    --color-surface-2: #252017;
+    --color-border: #3a352a;
+    --color-ink: #ede8dd;
+    --color-ink-muted: #a39c8a;
+    --color-accent: #d9695a;
+    --color-accent-soft: #3a221d;
+  }
+}
+
+html,
+body {
+  @apply bg-bg text-ink;
+
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+  }
+}
+
+/* STYLE.md §6 — visible only for keyboard navigation, not mouse clicks. The
+   one place the accent color's "exactly three roles" rule gets a fourth:
+   focus indication is structural, same reasoning as links/buttons. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* NavigationProgress.tsx — the width/opacity transition that makes the top
+   bar read as a progress fill rather than a bar that just teleports in. */
+.nav-progress {
+  transition:
+    width 0.3s ease-out,
+    opacity 0.3s ease-out;
+}
+
+/* root.tsx — the routed content is remounted (via a `key` on the location)
+   on every navigation, which replays this fade-in. Unlike NavigationProgress
+   this isn't gated on how long the navigation took, so it's visible on
+   every page change, fast or slow. */
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: page-fade-in 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-progress,
+  .page-transition {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* STYLE.md §5 "Post card" — base styling for bbob's sanitized HTML
+   (server/lib/bbcode.ts's allowlist: span/a/img/blockquote/p/pre/ol/ul/li/br),
+   rendered via dangerouslySetInnerHTML. Real CSS, not Tailwind utilities —
+   these are server-rendered raw HTML strings, not JSX Tailwind can reach. */
+.post-body {
+  line-height: 1.6;
+}
+
+.post-body a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.post-body a:hover {
+  text-decoration: underline;
+}
+
+.post-body blockquote {
+  border-left: 2px solid var(--color-border);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: var(--color-ink-muted);
+}
+
+.post-body blockquote p {
+  margin: 0;
+}
+
+.post-body pre {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  overflow-x: auto;
+  font-family: ui-monospace, monospace;
+  font-size: 0.875rem;
+}
+
+.post-body img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-body ul,
+.post-body ol {
+  padding-left: 1.5rem;
+}
+
+.post-body p + p {
+  margin-top: 0.75rem;
+}
