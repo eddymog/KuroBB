@@ -1,86 +1,52 @@
-# Welcome to React Router!
+# KuroBB
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A standalone forum platform (Node.js/TypeScript), built from scratch — with an optional,
+one-time migration path from an existing MyBB installation. MyBB is a reference for
+which features actually matter, not a dependency: KuroBB works as a fresh, empty install
+the way any forum software does on day one.
 
-## Features
+See [`claude.md`](./claude.md) for the project's scope and working agreement, and
+[`kurobb-design.md`](./kurobb-design.md) for the living architecture doc (source of
+truth for stack decisions) — start there for anything not covered below.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Stack
 
-## Getting Started
+Node.js 22 LTS · Express · React Router v8 (Framework Mode, SSR) · PostgreSQL 16 ·
+Drizzle ORM · Tailwind CSS v4 · argon2 · server-side sessions (no JWT).
 
-### Installation
-
-Install the dependencies:
+## Getting started
 
 ```bash
+docker compose up -d postgres   # Postgres 16 on localhost:5433
 npm install
+npm run dev                     # http://localhost:3000
 ```
 
-### Development
-
-Start the development server with HMR:
+Other useful commands:
 
 ```bash
-npm run dev
+npm run typecheck   # react-router typegen + tsc
+npm run build        # production build
+npm run db:migrate   # apply pending Drizzle migrations
+npm run db:studio    # browse the database in Drizzle Studio
 ```
 
-Your application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
+There's no seed data by design — register a real account and create a real forum
+through the product itself, the way a fresh install works.
 
 ## Deployment
 
-### Docker Deployment
+Render (app) + Neon (Postgres) — see `render.yaml` and §14 of `kurobb-design.md` for the
+full reasoning and setup steps.
 
-To build and run using Docker:
+## Docs
 
-```bash
-docker build -t my-app .
+- [`claude.md`](./claude.md) — scope, MVP boundaries, working agreement
+- [`kurobb-design.md`](./kurobb-design.md) — architecture, data model, API surface (KRB-001)
+- [`kurobb-checklist.md`](./kurobb-checklist.md) — build-phase tracking (KRB-002)
+- [`STYLE.md`](./STYLE.md) — visual design system
+- [`docs/PLAN.md`](./docs/PLAN.md) — original vision doc (NodeBB-shaped platform + RPG layer)
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
+## License
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── server.js
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+[AGPLv3](./LICENSE).
