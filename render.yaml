@@ -9,7 +9,7 @@ services:
     name: kurobb
     runtime: docker
     dockerfilePath: ./Dockerfile
-    plan: 0.5c-512mb # "Starter" — 0.5 CPU / 512MB, ~$7/mo
+    plan: free # spins down after ~15min idle; upgrade to 0.5c-512mb ($7/mo) once real traffic needs it
     envVars:
       - key: NODE_ENV
         value: production
