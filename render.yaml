@@ -6,7 +6,7 @@
 # manually to Neon's connection string after the Neon project is created.
 services:
   - type: web
-    name: kurobb
+    name: shinobigaiden
     runtime: docker
     dockerfilePath: ./Dockerfile
     plan: free # spins down after ~15min idle; upgrade to 0.5c-512mb ($7/mo) once real traffic needs it
