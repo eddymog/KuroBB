@@ -10,13 +10,13 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/auth.register";
 
 export function meta() {
-  return [{ title: "Register · KuroBB" }];
+  return [{ title: "Registrarse · KuroBB" }];
 }
 
 const schema = z.object({
-  username: z.string().min(1, "Username is required."),
-  email: z.string().email("Enter a valid email address."),
-  password: z.string().min(8, "Password must be at least 8 characters."),
+  username: z.string().min(1, "El nombre de usuario es obligatorio."),
+  email: z.string().email("Ingresa una dirección de correo electrónico válida."),
+  password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres."),
 });
 
 export async function action({ request }: Route.ActionArgs) {
@@ -34,30 +34,30 @@ export async function action({ request }: Route.ActionArgs) {
 export default function Register({ actionData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-sm flex-col justify-center gap-8 p-6">
-      <PageHeading>Register</PageHeading>
+      <PageHeading>Registrarse</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
         <Field
           name="username"
-          label="Username"
+          label="Nombre de usuario"
           required
           error={actionData?.fieldErrors?.username}
         />
         <Field
           name="email"
           type="email"
-          label="Email"
+          label="Correo electrónico"
           required
           error={actionData?.fieldErrors?.email}
         />
         <Field
           name="password"
           type="password"
-          label="Password"
+          label="Contraseña"
           required
           minLength={8}
           error={actionData?.fieldErrors?.password}
         />
-        <Button type="submit">Register</Button>
+        <Button type="submit">Registrarse</Button>
       </Form>
     </main>
   );

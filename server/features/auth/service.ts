@@ -26,7 +26,7 @@ export async function register(input: {
   const existing = await repo.findUserByUsernameOrEmail(input.username);
   const existingByEmail = await repo.findUserByUsernameOrEmail(input.email);
   if (existing || existingByEmail) {
-    throwAppError("CONFLICT", "That username or email is already registered.");
+    throwAppError("CONFLICT", "Ese nombre de usuario o correo electrónico ya está registrado.");
   }
 
   // Bootstrapping: the first account on a fresh install becomes admin
@@ -59,12 +59,12 @@ export async function login(input: {
 }): Promise<{ setCookieHeader: string }> {
   const user = await repo.findUserByUsernameOrEmail(input.usernameOrEmail);
   if (!user) {
-    throwAppError("UNAUTHENTICATED", "Incorrect username/email or password.");
+    throwAppError("UNAUTHENTICATED", "Nombre de usuario/correo electrónico o contraseña incorrectos.");
   }
 
   const valid = await verifyPassword(user.passwordHash, input.password);
   if (!valid) {
-    throwAppError("UNAUTHENTICATED", "Incorrect username/email or password.");
+    throwAppError("UNAUTHENTICATED", "Nombre de usuario/correo electrónico o contraseña incorrectos.");
   }
 
   const setCookieHeader = await createSessionCookieHeader(user.id);
@@ -100,7 +100,7 @@ export async function getCurrentUser(request: Request) {
 export async function requireUser(request: Request) {
   const user = await getCurrentUser(request);
   if (!user) {
-    throwAppError("UNAUTHENTICATED", "You need to be logged in to do that.");
+    throwAppError("UNAUTHENTICATED", "Debes iniciar sesión para hacer eso.");
   }
   return user;
 }
@@ -113,7 +113,7 @@ export async function requireUser(request: Request) {
 export async function requireAdmin(request: Request) {
   const user = await requireUser(request);
   if (!user.isAdmin) {
-    throwAppError("FORBIDDEN", "Only an admin can do that.");
+    throwAppError("FORBIDDEN", "Solo un administrador puede hacer eso.");
   }
   return user;
 }

@@ -70,6 +70,10 @@ export async function requirePermission(
 ): Promise<void> {
   const allowed = await resolvePermission(user, forumId, permission);
   if (!allowed) {
-    throwAppError("FORBIDDEN", `You don't have permission to ${permission} this forum.`);
+    // `permission` is the internal "view" | "post" identifier (Permission
+    // type above), not forum copy — mapped to a Spanish verb for display
+    // only, so the type itself stays untouched.
+    const action = permission === "view" ? "ver" : "publicar en";
+    throwAppError("FORBIDDEN", `No tienes permiso para ${action} este foro.`);
   }
 }

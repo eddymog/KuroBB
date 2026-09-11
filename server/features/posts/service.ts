@@ -17,7 +17,7 @@ export async function listThreadPosts(
     // Guest posts have no userId to join against (§07) — "Guest" here, not a
     // blank label, same reasoning as PostCard being built to take a resolved
     // string rather than assume every post has an author.
-    authorLabel: row.authorUsername ?? "Guest",
+    authorLabel: row.authorUsername ?? "Invitado",
   }));
   return { thread, posts, page, perPage, total: thread.replyCount, totalPages };
 }
@@ -29,8 +29,8 @@ export async function createReply(input: {
 }) {
   await getThreadOrThrow(input.threadId);
   if (!input.bodyBbcode.trim()) {
-    throwAppError("VALIDATION_ERROR", "Reply cannot be empty.", [
-      { field: "bodyBbcode", issue: "Reply cannot be empty." },
+    throwAppError("VALIDATION_ERROR", "La respuesta no puede estar vacía.", [
+      { field: "bodyBbcode", issue: "La respuesta no puede estar vacía." },
     ]);
   }
 
@@ -52,7 +52,7 @@ export async function createReply(input: {
 export async function getPostOrThrow(id: number) {
   const post = await repo.findPostById(id);
   if (!post) {
-    throwAppError("NOT_FOUND", `Post ${id} does not exist.`);
+    throwAppError("NOT_FOUND", `El mensaje ${id} no existe.`);
   }
   return post;
 }
@@ -65,11 +65,11 @@ export async function editPost(input: {
 }) {
   const post = await getPostOrThrow(input.postId);
   if (post.userId !== input.userId && !input.isAdmin) {
-    throwAppError("FORBIDDEN", "You can only edit your own posts.");
+    throwAppError("FORBIDDEN", "Solo puedes editar tus propios mensajes.");
   }
   if (!input.bodyBbcode.trim()) {
-    throwAppError("VALIDATION_ERROR", "Post cannot be empty.", [
-      { field: "bodyBbcode", issue: "Post cannot be empty." },
+    throwAppError("VALIDATION_ERROR", "El mensaje no puede estar vacío.", [
+      { field: "bodyBbcode", issue: "El mensaje no puede estar vacío." },
     ]);
   }
   // §08: re-renders body_html_cache from the new source; body_bbcode is

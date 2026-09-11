@@ -10,12 +10,12 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/auth.login";
 
 export function meta() {
-  return [{ title: "Log in · KuroBB" }];
+  return [{ title: "Iniciar sesión · KuroBB" }];
 }
 
 const schema = z.object({
-  usernameOrEmail: z.string().min(1, "Enter your username or email."),
-  password: z.string().min(1, "Enter your password."),
+  usernameOrEmail: z.string().min(1, "Ingresa tu nombre de usuario o correo electrónico."),
+  password: z.string().min(1, "Ingresa tu contraseña."),
 });
 
 export async function action({ request }: Route.ActionArgs) {
@@ -33,25 +33,25 @@ export async function action({ request }: Route.ActionArgs) {
 export default function Login({ actionData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-sm flex-col justify-center gap-8 p-6">
-      <PageHeading>Log in</PageHeading>
+      <PageHeading>Iniciar sesión</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
         <Field
           name="usernameOrEmail"
-          label="Username or email"
+          label="Nombre de usuario o correo electrónico"
           required
           error={actionData?.fieldErrors?.usernameOrEmail}
         />
         <Field
           name="password"
           type="password"
-          label="Password"
+          label="Contraseña"
           required
           error={actionData?.fieldErrors?.password}
         />
-        <Button type="submit">Log in</Button>
+        <Button type="submit">Iniciar sesión</Button>
       </Form>
       <Link to="/auth/register" className="text-sm text-accent">
-        Need an account?
+        ¿Necesitas una cuenta?
       </Link>
     </main>
   );

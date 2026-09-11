@@ -11,7 +11,7 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/settings";
 
 export function meta() {
-  return [{ title: "Settings · KuroBB" }];
+  return [{ title: "Configuración · KuroBB" }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -22,7 +22,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 const schema = z.object({
-  avatarUrl: z.string().url("Enter a valid URL.").optional().or(z.literal("")),
+  avatarUrl: z.string().url("Ingresa una URL válida.").optional().or(z.literal("")),
   signature: z.string().optional(),
 });
 
@@ -43,24 +43,24 @@ export default function Settings({ loaderData, actionData }: Route.ComponentProp
   const { user } = loaderData;
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-8 p-6 md:p-8">
-      <PageHeading>Settings</PageHeading>
+      <PageHeading>Configuración</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
         <Field
           name="avatarUrl"
           type="url"
-          label="Avatar URL"
+          label="URL del avatar"
           defaultValue={user.avatarUrl ?? ""}
           error={actionData?.fieldErrors?.avatarUrl}
         />
         <Field
           as="textarea"
           name="signature"
-          label="Signature"
+          label="Firma"
           defaultValue={user.signature ?? ""}
           error={actionData?.fieldErrors?.signature}
         />
         <Button type="submit" className="self-start">
-          Save
+          Guardar
         </Button>
       </Form>
     </main>

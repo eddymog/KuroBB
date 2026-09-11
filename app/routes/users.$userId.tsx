@@ -4,7 +4,7 @@ import { getPublicProfileOrThrow } from "~server/features/users/service";
 import type { Route } from "./+types/users.$userId";
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return [{ title: loaderData ? `${loaderData.username} · KuroBB` : "Profile · KuroBB" }];
+  return [{ title: loaderData ? `${loaderData.username} · KuroBB` : "Perfil · KuroBB" }];
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -26,7 +26,7 @@ export default function PublicProfile({ loaderData }: Route.ComponentProps) {
         ) : null}
         <div>
           <PageHeading>{loaderData.username}</PageHeading>
-          <p className="text-sm text-ink-muted">{loaderData.postCount} posts</p>
+          <p className="text-sm text-ink-muted">{loaderData.postCount} mensajes</p>
         </div>
       </div>
       {loaderData.signature ? (

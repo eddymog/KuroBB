@@ -11,7 +11,7 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/posts.$postId.edit";
 
 export function meta() {
-  return [{ title: "Edit post · KuroBB" }];
+  return [{ title: "Editar mensaje · KuroBB" }];
 }
 
 export async function loader({ request, params }: Route.LoaderArgs) {
@@ -20,13 +20,13 @@ export async function loader({ request, params }: Route.LoaderArgs) {
   if (post.userId !== user.id && !user.isAdmin) {
     // Same rule editPost enforces on submit — checked here too so the form
     // itself isn't shown to someone who can't use it.
-    throw new Response("Forbidden", { status: 403 });
+    throw new Response("Prohibido", { status: 403 });
   }
   return { post };
 }
 
 const schema = z.object({
-  bodyBbcode: z.string().min(1, "Post cannot be empty."),
+  bodyBbcode: z.string().min(1, "El mensaje no puede estar vacío."),
 });
 
 export async function action({ request, params }: Route.ActionArgs) {
@@ -49,22 +49,22 @@ export default function EditPost({ loaderData, actionData }: Route.ComponentProp
   const { post } = loaderData;
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-8 p-6 md:p-8">
-      <PageHeading>Edit post</PageHeading>
+      <PageHeading>Editar mensaje</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
         <Field
           as="textarea"
           name="bodyBbcode"
-          label="Post"
+          label="Mensaje"
           defaultValue={post.bodyBbcode}
           required
           error={actionData?.fieldErrors?.bodyBbcode}
         />
         <div>
-          <Button type="submit">Save</Button>
+          <Button type="submit">Guardar</Button>
         </div>
       </Form>
       <Link to={`/threads/${post.threadId}`} className="text-sm text-accent">
-        Back to thread
+        Volver al tema
       </Link>
     </main>
   );

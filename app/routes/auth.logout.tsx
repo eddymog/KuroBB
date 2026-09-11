@@ -16,9 +16,9 @@ export async function action({ request }: Route.ActionArgs) {
 export default function Logout() {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-sm flex-col justify-center gap-6 p-6">
-      <PageHeading>Log out</PageHeading>
+      <PageHeading>Cerrar sesión</PageHeading>
       <Form method="post">
-        <Button type="submit">Confirm log out</Button>
+        <Button type="submit">Confirmar cierre de sesión</Button>
       </Form>
     </main>
   );

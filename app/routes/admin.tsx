@@ -6,7 +6,7 @@ import { requireAdmin } from "~server/features/auth/service";
 import type { Route } from "./+types/admin";
 
 export function meta() {
-  return [{ title: "Admin · KuroBB" }];
+  return [{ title: "Administración · KuroBB" }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -21,19 +21,19 @@ export default function AdminDashboard() {
       <ul className="flex flex-col gap-2">
         <li>
           <Link to="/admin/forums" className="text-accent hover:underline">
-            Forum structure
+            Estructura de foros
           </Link>
         </li>
         <li>
           <Link to="/admin/groups" className="text-accent hover:underline">
-            Groups &amp; permissions
+            Grupos y permisos
           </Link>
         </li>
       </ul>
       <p className="text-sm text-ink-muted italic">
-        Migration-run history isn't shown here — no migration script exists yet
-        (Phase 4 is set aside). Moderation tools (report queue, ban/lock actions) — Phase
-        5, not built yet either.
+        Aquí no se muestra el historial de migraciones — todavía no existe un script de
+        migración (la Fase 4 está en pausa). Las herramientas de moderación (cola de
+        reportes, acciones de baneo/bloqueo) — Fase 5, tampoco construidas aún.
       </p>
     </main>
   );

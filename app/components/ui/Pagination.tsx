@@ -14,16 +14,16 @@ export function Pagination({ page, totalPages }: PaginationProps) {
   return (
     <nav className="flex items-center gap-4 text-sm">
       <span className="text-ink-muted">
-        Page {page} of {totalPages}
+        Página {page} de {totalPages}
       </span>
       {page > 1 && (
         <Link to={`?page=${page - 1}`} className="text-accent">
-          Previous
+          Anterior
         </Link>
       )}
       {page < totalPages && (
         <Link to={`?page=${page + 1}`} className="text-accent">
-          Next
+          Siguiente
         </Link>
       )}
     </nav>

@@ -18,11 +18,11 @@ const PER_PAGE = 20;
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
-    { title: loaderData ? `${loaderData.thread.title} · KuroBB` : "Thread · KuroBB" },
+    { title: loaderData ? `${loaderData.thread.title} · KuroBB` : "Tema · KuroBB" },
     {
       name: "description",
       content: loaderData
-        ? `${loaderData.thread.title} — ${loaderData.total} replies on KuroBB.`
+        ? `${loaderData.thread.title} — ${loaderData.total} respuestas en KuroBB.`
         : undefined,
     },
   ];
@@ -44,7 +44,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 }
 
 const replySchema = z.object({
-  bodyBbcode: z.string().min(1, "Reply cannot be empty."),
+  bodyBbcode: z.string().min(1, "La respuesta no puede estar vacía."),
 });
 
 export async function action({ request, params }: Route.ActionArgs) {
@@ -80,11 +80,11 @@ export default function Thread({ loaderData }: Route.ComponentProps) {
       <Pagination page={page} totalPages={totalPages} />
 
       <div>
-        <h2 className="mb-3 font-serif text-lg font-semibold text-ink">Reply</h2>
+        <h2 className="mb-3 font-serif text-lg font-semibold text-ink">Responder</h2>
         <Form method="post" className="flex flex-col gap-4">
-          <Field as="textarea" name="bodyBbcode" label="Your reply" required />
+          <Field as="textarea" name="bodyBbcode" label="Tu respuesta" required />
           <div>
-            <Button type="submit">Post reply</Button>
+            <Button type="submit">Publicar respuesta</Button>
           </div>
         </Form>
       </div>

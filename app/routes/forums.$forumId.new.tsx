@@ -12,12 +12,12 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/forums.$forumId.new";
 
 export function meta() {
-  return [{ title: "New thread · KuroBB" }];
+  return [{ title: "Nuevo tema · KuroBB" }];
 }
 
 const schema = z.object({
-  title: z.string().min(1, "Title is required."),
-  bodyBbcode: z.string().min(1, "Post cannot be empty."),
+  title: z.string().min(1, "El título es obligatorio."),
+  bodyBbcode: z.string().min(1, "El mensaje no puede estar vacío."),
 });
 
 export async function loader({ request, params }: Route.LoaderArgs) {
@@ -46,22 +46,22 @@ export async function action({ request, params }: Route.ActionArgs) {
 export default function NewThread({ params, actionData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-8 p-6 md:p-8">
-      <PageHeading>New thread</PageHeading>
+      <PageHeading>Nuevo tema</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
-        <Field name="title" label="Title" required error={actionData?.fieldErrors?.title} />
+        <Field name="title" label="Título" required error={actionData?.fieldErrors?.title} />
         <Field
           as="textarea"
           name="bodyBbcode"
-          label="Post"
+          label="Mensaje"
           required
           error={actionData?.fieldErrors?.bodyBbcode}
         />
         <div>
-          <Button type="submit">Create thread</Button>
+          <Button type="submit">Crear tema</Button>
         </div>
       </Form>
       <Link to={`/forums/${params.forumId}`} className="text-sm text-accent">
-        Back to forum
+        Volver al foro
       </Link>
     </main>
   );

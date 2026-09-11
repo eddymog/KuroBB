@@ -11,11 +11,11 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/forums.new";
 
 export function meta() {
-  return [{ title: "Create a forum · KuroBB" }];
+  return [{ title: "Crear un foro · KuroBB" }];
 }
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required."),
+  name: z.string().min(1, "El nombre es obligatorio."),
   description: z.string().optional(),
   parentId: z.string().optional(),
 });
@@ -46,17 +46,17 @@ export async function action({ request }: Route.ActionArgs) {
 export default function NewForum({ actionData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-8 p-6 md:p-8">
-      <PageHeading>Create a forum</PageHeading>
+      <PageHeading>Crear un foro</PageHeading>
       <Form method="post" className="flex flex-col gap-4">
-        <Field name="name" label="Name" required error={actionData?.fieldErrors?.name} />
+        <Field name="name" label="Nombre" required error={actionData?.fieldErrors?.name} />
         <Field
           as="textarea"
           name="description"
-          label="Description"
+          label="Descripción"
           error={actionData?.fieldErrors?.description}
         />
         <div>
-          <Button type="submit">Create forum</Button>
+          <Button type="submit">Crear foro</Button>
         </div>
       </Form>
     </main>

@@ -17,7 +17,7 @@ import type { Route } from "./+types/admin.groups.$groupId";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
-    { title: loaderData ? `${loaderData.group.name} · Admin · KuroBB` : "Group · Admin · KuroBB" },
+    { title: loaderData ? `${loaderData.group.name} · Admin · KuroBB` : "Grupo · Admin · KuroBB" },
   ];
 }
 
@@ -68,14 +68,14 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
       <PageHeading>{group.name}</PageHeading>
 
       <div className="flex flex-col gap-4">
-        <h2 className="font-serif text-lg font-semibold text-ink">Members</h2>
+        <h2 className="font-serif text-lg font-semibold text-ink">Miembros</h2>
         {members.length === 0 ? (
-          <p className="text-ink-muted">No members yet.</p>
+          <p className="text-ink-muted">Aún no hay miembros.</p>
         ) : (
           <Table>
             <thead>
               <tr>
-                <Th>Username</Th>
+                <Th>Nombre de usuario</Th>
                 <Th />
               </tr>
             </thead>
@@ -88,7 +88,7 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
                       <input type="hidden" name="_action" value="remove-member" />
                       <input type="hidden" name="userId" value={member.id} />
                       <Button type="submit" variant="destructive">
-                        Remove
+                        Eliminar
                       </Button>
                     </Form>
                   </Td>
@@ -101,26 +101,26 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
           <input type="hidden" name="_action" value="add-member" />
           <div className="flex flex-col gap-1">
             <label htmlFor="username" className="text-sm text-ink-muted">
-              Username
+              Nombre de usuario
             </label>
             <input
               id="username"
               type="text"
               name="username"
-              placeholder="username"
+              placeholder="nombre de usuario"
               required
               className="border border-border bg-surface px-3 py-2 text-sm text-ink"
             />
           </div>
-          <Button type="submit">Add member</Button>
+          <Button type="submit">Añadir miembro</Button>
         </Form>
       </div>
 
       <div className="flex flex-col gap-4">
-        <h2 className="font-serif text-lg font-semibold text-ink">Forum permissions</h2>
+        <h2 className="font-serif text-lg font-semibold text-ink">Permisos de foros</h2>
         <p className="text-sm text-ink-muted italic">
-          "Inherit" means no rule at this level — falls through to the forum's parent
-          chain, or allow by default if nothing anywhere says otherwise (§05).
+          "Heredar" significa que no hay una regla en este nivel — se recurre a la cadena
+          de foros padre, o se permite por defecto si nada más lo indica (§05).
         </p>
         {/* One <form> per row, declared outside the table and associated with
             that row's controls via the HTML5 `form` attribute — a <form>
@@ -136,9 +136,9 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
         <Table>
           <thead>
             <tr>
-              <Th>Forum</Th>
-              <Th>View</Th>
-              <Th>Post</Th>
+              <Th>Foro</Th>
+              <Th>Ver</Th>
+              <Th>Publicar</Th>
               <Th />
             </tr>
           </thead>
@@ -155,9 +155,9 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
                       defaultValue={triState(rule.canView)}
                       className={selectClasses}
                     >
-                      <option value="inherit">Inherit</option>
-                      <option value="allow">Allow</option>
-                      <option value="deny">Deny</option>
+                      <option value="inherit">Heredar</option>
+                      <option value="allow">Permitir</option>
+                      <option value="deny">Denegar</option>
                     </select>
                   </Td>
                   <Td>
@@ -167,14 +167,14 @@ export default function GroupDetail({ loaderData }: Route.ComponentProps) {
                       defaultValue={triState(rule.canPost)}
                       className={selectClasses}
                     >
-                      <option value="inherit">Inherit</option>
-                      <option value="allow">Allow</option>
-                      <option value="deny">Deny</option>
+                      <option value="inherit">Heredar</option>
+                      <option value="allow">Permitir</option>
+                      <option value="deny">Denegar</option>
                     </select>
                   </Td>
                   <Td>
                     <Button type="submit" form={formId} variant="secondary">
-                      Save
+                      Guardar
                     </Button>
                   </Td>
                 </tr>

@@ -28,7 +28,7 @@ export async function parseFormData<Schema extends z.ZodType>(
   if (!result.success) {
     throwAppError(
       "VALIDATION_ERROR",
-      "One or more fields are invalid.",
+      "Uno o más campos no son válidos.",
       result.error.issues.map((issue) => ({
         field: issue.path.join("."),
         issue: issue.message,

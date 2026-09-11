@@ -12,7 +12,7 @@ import { safeParseFormData } from "~server/lib/validation";
 import type { Route } from "./+types/admin.groups";
 
 export function meta() {
-  return [{ title: "Groups & permissions · Admin · KuroBB" }];
+  return [{ title: "Grupos y permisos · Admin · KuroBB" }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -21,7 +21,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { groups };
 }
 
-const schema = z.object({ name: z.string().min(1, "Group name is required.") });
+const schema = z.object({ name: z.string().min(1, "El nombre del grupo es obligatorio.") });
 
 export async function action({ request }: Route.ActionArgs) {
   await requireAdmin(request);
@@ -36,14 +36,14 @@ export async function action({ request }: Route.ActionArgs) {
 export default function AdminGroups({ loaderData, actionData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-8 p-6 md:p-8">
-      <PageHeading>Groups &amp; permissions</PageHeading>
+      <PageHeading>Grupos y permisos</PageHeading>
       {loaderData.groups.length === 0 ? (
-        <p className="text-ink-muted">No groups yet — create one below.</p>
+        <p className="text-ink-muted">Aún no hay grupos — crea uno abajo.</p>
       ) : (
         <Table>
           <thead>
             <tr>
-              <Th>Name</Th>
+              <Th>Nombre</Th>
               <Th />
             </tr>
           </thead>
@@ -53,7 +53,7 @@ export default function AdminGroups({ loaderData, actionData }: Route.ComponentP
                 <Td>{group.name}</Td>
                 <Td>
                   <Link to={`/admin/groups/${group.id}`} className="text-accent hover:underline">
-                    Manage
+                    Gestionar
                   </Link>
                 </Td>
               </tr>
@@ -62,17 +62,17 @@ export default function AdminGroups({ loaderData, actionData }: Route.ComponentP
         </Table>
       )}
       <div className="flex flex-col gap-4">
-        <h2 className="font-serif text-lg font-semibold text-ink">New group</h2>
+        <h2 className="font-serif text-lg font-semibold text-ink">Nuevo grupo</h2>
         <Form method="post" className="flex flex-col gap-4">
           <Field
             name="name"
-            label="Name"
-            placeholder="e.g. Moderator"
+            label="Nombre"
+            placeholder="p. ej. Moderador"
             required
             error={actionData?.fieldErrors?.name}
           />
           <Button type="submit" className="self-start">
-            Create
+            Crear
           </Button>
         </Form>
       </div>

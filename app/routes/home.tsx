@@ -7,7 +7,7 @@ import type { Route } from "./+types/home";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "KuroBB" },
-    { name: "description", content: "KuroBB — a standalone forum." },
+    { name: "description", content: "KuroBB — un foro independiente." },
   ];
 }
 
@@ -17,7 +17,7 @@ export default function Home() {
       <PageHeading>KuroBB</PageHeading>
       <p>
         <Link to="/forums" className="text-accent">
-          Browse the forums
+          Explorar los foros
         </Link>
       </p>
     </main>

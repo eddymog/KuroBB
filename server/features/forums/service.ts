@@ -21,7 +21,7 @@ export async function createForum(input: {
 export async function getForumOrThrow(id: number) {
   const node = await getForumNode(id);
   if (!node) {
-    throwAppError("NOT_FOUND", `Forum ${id} does not exist.`);
+    throwAppError("NOT_FOUND", `El foro ${id} no existe.`);
   }
   return node;
 }
@@ -29,7 +29,7 @@ export async function getForumOrThrow(id: number) {
 export async function getThreadOrThrow(id: number) {
   const thread = await repo.findThreadById(id);
   if (!thread) {
-    throwAppError("NOT_FOUND", `Thread ${id} does not exist.`);
+    throwAppError("NOT_FOUND", `El tema ${id} no existe.`);
   }
   return thread;
 }
@@ -47,13 +47,13 @@ export async function createThread(input: {
 }) {
   await getForumOrThrow(input.forumId);
   if (!input.title.trim()) {
-    throwAppError("VALIDATION_ERROR", "Title cannot be empty.", [
-      { field: "title", issue: "Title cannot be empty." },
+    throwAppError("VALIDATION_ERROR", "El título no puede estar vacío.", [
+      { field: "title", issue: "El título no puede estar vacío." },
     ]);
   }
   if (!input.bodyBbcode.trim()) {
-    throwAppError("VALIDATION_ERROR", "Post body cannot be empty.", [
-      { field: "bodyBbcode", issue: "Post body cannot be empty." },
+    throwAppError("VALIDATION_ERROR", "El contenido del mensaje no puede estar vacío.", [
+      { field: "bodyBbcode", issue: "El contenido del mensaje no puede estar vacío." },
     ]);
   }
 

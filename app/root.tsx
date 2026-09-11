@@ -32,7 +32,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -79,9 +79,22 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
 export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
   const location = useLocation();
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  let message = "¡Ups!";
+  let details = "Ha ocurrido un error inesperado.";
   let stack: string | undefined;
+
+  // Codes are an internal taxonomy (server/lib/errors.ts's AppErrorCode) —
+  // not forum copy — so they get a display label here rather than being
+  // translated at the source and risking a mismatch with code that still
+  // compares against the English literal (e.g. permission checks).
+  const CODE_LABELS: Record<string, string> = {
+    VALIDATION_ERROR: "Error de validación",
+    UNAUTHENTICATED: "No autenticado",
+    FORBIDDEN: "Prohibido",
+    NOT_FOUND: "No encontrado",
+    CONFLICT: "Conflicto",
+    INTERNAL_ERROR: "Error interno",
+  };
 
   if (isRouteErrorResponse(error)) {
     // kurobb-design.md §06's error envelope, thrown via server/lib/errors.ts's
@@ -89,13 +102,13 @@ export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
     // AppError helper rather than an unmatched route or a thrown Response.
     const body = error.data as { error?: { code: string; message: string } } | undefined;
     if (body?.error) {
-      message = body.error.code;
+      message = CODE_LABELS[body.error.code] ?? body.error.code;
       details = body.error.message;
     } else {
       message = error.status === 404 ? "404" : "Error";
       details =
         error.status === 404
-          ? "The requested page could not be found."
+          ? "La página solicitada no se encontró."
           : error.statusText || details;
     }
   } else if (import.meta.env.DEV && error && error instanceof Error) {
@@ -124,7 +137,7 @@ export function ErrorBoundary({ error, loaderData }: Route.ErrorBoundaryProps) {
           </pre>
         )}
         <Link to="/forums" className="text-accent hover:underline">
-          Back to forums
+          Volver a los foros
         </Link>
       </main>
     </>

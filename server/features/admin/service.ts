@@ -23,13 +23,13 @@ export async function editForum(
 ) {
   await getForumOrThrow(forumId); // 404s cleanly if it doesn't exist
   if (!input.name.trim()) {
-    throwAppError("VALIDATION_ERROR", "Name is required.", [
-      { field: "name", issue: "Name is required." },
+    throwAppError("VALIDATION_ERROR", "El nombre es obligatorio.", [
+      { field: "name", issue: "El nombre es obligatorio." },
     ]);
   }
   if (input.parentId === forumId) {
-    throwAppError("VALIDATION_ERROR", "A forum cannot be its own parent.", [
-      { field: "parentId", issue: "A forum cannot be its own parent." },
+    throwAppError("VALIDATION_ERROR", "Un foro no puede ser su propio padre.", [
+      { field: "parentId", issue: "Un foro no puede ser su propio padre." },
     ]);
   }
   const forum = await forumsRepo.updateForum(forumId, input);
@@ -40,12 +40,12 @@ export async function editForum(
 export async function deleteForumIfEmpty(forumId: number) {
   const forum = await forumsRepo.findForumById(forumId);
   if (!forum) {
-    throwAppError("NOT_FOUND", `Forum ${forumId} does not exist.`);
+    throwAppError("NOT_FOUND", `El foro ${forumId} no existe.`);
   }
   if (forum.threadCount > 0) {
     throwAppError(
       "CONFLICT",
-      `"${forum.name}" has ${forum.threadCount} thread(s) — move or delete them first.`,
+      `"${forum.name}" tiene ${forum.threadCount} tema(s) — muévelos o elimínalos primero.`,
     );
   }
   await forumsRepo.deleteForum(forumId);
@@ -58,13 +58,13 @@ export async function listGroups() {
 
 export async function createGroup(name: string) {
   if (!name.trim()) {
-    throwAppError("VALIDATION_ERROR", "Group name is required.", [
-      { field: "name", issue: "Group name is required." },
+    throwAppError("VALIDATION_ERROR", "El nombre del grupo es obligatorio.", [
+      { field: "name", issue: "El nombre del grupo es obligatorio." },
     ]);
   }
   const existing = await permsRepo.findGroupByName(name);
   if (existing) {
-    throwAppError("CONFLICT", `A group named "${name}" already exists.`);
+    throwAppError("CONFLICT", `Ya existe un grupo llamado "${name}".`);
   }
   return permsRepo.insertGroup(name);
 }
@@ -72,7 +72,7 @@ export async function createGroup(name: string) {
 export async function getGroupDetailOrThrow(groupId: number) {
   const group = await permsRepo.findGroupById(groupId);
   if (!group) {
-    throwAppError("NOT_FOUND", `Group ${groupId} does not exist.`);
+    throwAppError("NOT_FOUND", `El grupo ${groupId} no existe.`);
   }
   const [members, forumRules] = await Promise.all([
     permsRepo.listGroupMembers(groupId),
@@ -85,7 +85,7 @@ export async function addMemberToGroupByUsername(groupId: number, username: stri
   await getGroupDetailOrThrow(groupId);
   const user = await authRepo.findUserByUsernameOrEmail(username);
   if (!user) {
-    throwAppError("NOT_FOUND", `No user named "${username}".`);
+    throwAppError("NOT_FOUND", `No existe un usuario llamado "${username}".`);
   }
   await permsRepo.addUserToGroup(user.id, groupId);
 }

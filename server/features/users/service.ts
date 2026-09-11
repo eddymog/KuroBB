@@ -5,7 +5,7 @@ import * as repo from "./repository";
 export async function getPublicProfileOrThrow(id: number) {
   const user = await repo.findUserById(id);
   if (!user) {
-    throwAppError("NOT_FOUND", `User ${id} does not exist.`);
+    throwAppError("NOT_FOUND", `El usuario ${id} no existe.`);
   }
   // Public profile — never leak passwordHash/email/isAdmin to another user.
   return {

@@ -14,11 +14,11 @@ export function NavBar({ user }: { user: NavBarUser | null }) {
         </Link>
         <nav className="flex items-center gap-4 text-sm font-medium text-ink">
           <Link to="/forums" className="hover:text-accent">
-            Forums
+            Foros
           </Link>
           {user && (
             <Link to="/settings" className="hover:text-accent">
-              Settings
+              Configuración
             </Link>
           )}
           {user?.isAdmin && (
@@ -32,12 +32,12 @@ export function NavBar({ user }: { user: NavBarUser | null }) {
               {/* A link, not an inline action — logout is a mutation, and
                   /auth/logout already has its own confirm-button page (§07). */}
               <Link to="/auth/logout" className="hover:text-accent">
-                Log out
+                Cerrar sesión
               </Link>
             </>
           ) : (
             <Link to="/auth/login" className="hover:text-accent">
-              Log in
+              Iniciar sesión
             </Link>
           )}
         </nav>

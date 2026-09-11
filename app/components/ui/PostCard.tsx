@@ -27,7 +27,7 @@ export function PostCard({ postId, authorLabel, createdAt, bodyHtml, canEdit }: 
       {canEdit && (
         <p className="mt-2 text-sm">
           <Link to={`/posts/${postId}/edit`} className="text-accent">
-            Edit
+            Editar
           </Link>
         </p>
       )}

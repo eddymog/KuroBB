@@ -8,7 +8,7 @@ import { listForumsForAdmin } from "~server/features/admin/service";
 import type { Route } from "./+types/admin.forums";
 
 export function meta() {
-  return [{ title: "Forum structure · Admin · KuroBB" }];
+  return [{ title: "Estructura de foros · Admin · KuroBB" }];
 }
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -20,12 +20,12 @@ export async function loader({ request }: Route.LoaderArgs) {
 export default function AdminForums({ loaderData }: Route.ComponentProps) {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-6 p-6 md:p-8">
-      <PageHeading>Forum structure</PageHeading>
+      <PageHeading>Estructura de foros</PageHeading>
       {loaderData.forums.length === 0 ? (
         <p className="text-ink-muted">
-          No forums yet.{" "}
+          Aún no hay foros.{" "}
           <Link to="/forums/new" className="text-accent hover:underline">
-            Create a forum
+            Crear un foro
           </Link>
         </p>
       ) : (
@@ -34,10 +34,10 @@ export default function AdminForums({ loaderData }: Route.ComponentProps) {
             <thead>
               <tr>
                 <Th>ID</Th>
-                <Th>Name</Th>
-                <Th>Parent</Th>
-                <Th>Position</Th>
-                <Th>Threads</Th>
+                <Th>Nombre</Th>
+                <Th>Padre</Th>
+                <Th>Posición</Th>
+                <Th>Temas</Th>
                 <Th />
               </tr>
             </thead>
@@ -51,7 +51,7 @@ export default function AdminForums({ loaderData }: Route.ComponentProps) {
                   <Td>{forum.threadCount}</Td>
                   <Td>
                     <Link to={`/admin/forums/${forum.id}/edit`} className="text-accent hover:underline">
-                      Edit
+                      Editar
                     </Link>
                   </Td>
                 </tr>
@@ -59,7 +59,7 @@ export default function AdminForums({ loaderData }: Route.ComponentProps) {
             </tbody>
           </Table>
           <Link to="/forums/new" className="text-accent hover:underline">
-            Create a forum
+            Crear un foro
           </Link>
         </>
       )}

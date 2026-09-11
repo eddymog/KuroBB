@@ -11,7 +11,7 @@ import type { Route } from "./+types/forums.$forumId";
 const PER_PAGE = 20;
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  return [{ title: loaderData ? `${loaderData.forum.name} · KuroBB` : "Forum · KuroBB" }];
+  return [{ title: loaderData ? `${loaderData.forum.name} · KuroBB` : "Foro · KuroBB" }];
 }
 
 export async function loader({ params, request }: Route.LoaderArgs) {
@@ -34,7 +34,7 @@ export default function ForumThreads({ loaderData }: Route.ComponentProps) {
           <PageHeading>{forum.name}</PageHeading>
           {!isEmpty && (
             <Link to={`/forums/${forum.id}/new`} className="text-sm text-accent">
-              New thread
+              Nuevo tema
             </Link>
           )}
         </div>
@@ -43,9 +43,9 @@ export default function ForumThreads({ loaderData }: Route.ComponentProps) {
 
       {isEmpty ? (
         <div className="flex flex-col items-center gap-3 py-12 text-center">
-          <p className="text-ink-muted">No threads yet.</p>
+          <p className="text-ink-muted">Aún no hay temas.</p>
           <Link to={`/forums/${forum.id}/new`} className="text-accent">
-            Start the first thread
+            Inicia el primer tema
           </Link>
         </div>
       ) : (
@@ -57,7 +57,7 @@ export default function ForumThreads({ loaderData }: Route.ComponentProps) {
                   {thread.title}
                 </Link>
                 <span className="shrink-0 text-sm text-ink-muted">
-                  {thread.replyCount} repl{thread.replyCount === 1 ? "y" : "ies"}
+                  {thread.replyCount} respuesta{thread.replyCount === 1 ? "" : "s"}
                 </span>
               </div>
             </li>
